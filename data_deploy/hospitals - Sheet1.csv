@@ -1,0 +1,6 @@
+id,hospital_id,name,address,phone_no,classification,no_of_wards
+1,1234,luth,no 7 idiaraba road,2340880987647,Tertiary,50
+2,1235,Isolo General,no 8 isolo way lagos,2347862898167,Secondary,15
+3,1236,mushin general,no 16 mushin idi-oro,23478647892909,Primary,10
+4,1237,Havanna,no 7 randle road mushin,2348763578876,Private_specialist,30
+5,1238,hilling cross,No 89 idiaraba road,23408973567778,Private,20
