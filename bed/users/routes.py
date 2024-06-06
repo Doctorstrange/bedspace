@@ -42,3 +42,12 @@ class ward(db.Model):
     free_beds = db.Column(db.Integer)
     user_id = db.Column(db.String(255))
 
+@users.route("/")
+def home():
+    return render_template('index.html')
+
+
+
+@users.route("/Hospital")
+def Hospital():
+    return render_template('Hospital.html')
