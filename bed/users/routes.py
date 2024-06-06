@@ -2,7 +2,6 @@ from flask import render_template, Blueprint, url_for, flash, redirect, request,
 from bed.users.forms import SignUpForm, LoginForm, User, Role, ResetPasswordForm, RequestResetForm, PostingForm
 from bed import bcrypt, db
 from flask_login import current_user, login_user, logout_user, login_required, current_user
-from bed.users.utils import send_reset_email
 import uuid
 from sqlalchemy.exc import IntegrityError
 from flask import session
@@ -39,7 +38,7 @@ class ward(db.Model):
     hospital_id = db.Column(db.String(255))
     ward_no = db.Column(db.Integer)
     ward_name = db.Column(db.String(255))
-    total_beds = db.Column(db.integer)
-    free_beds = db.Column(db.integer)
+    total_beds = db.Column(db.Integer)
+    free_beds = db.Column(db.Integer)
     user_id = db.Column(db.String(255))
 
