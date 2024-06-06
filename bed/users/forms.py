@@ -42,6 +42,16 @@ class User(UserMixin, db.Model):
         return self.id
 
 
+
+
+class PostingForm(FlaskForm):
+    Ward_name = StringField('Name of word', validators=[DataRequired()])
+    total_beds = StringField('Total beds')
+    free_beds= StringField('Free beds', validators=[DataRequired()])
+
+
+
+
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False, unique=True)
@@ -50,3 +60,35 @@ class Role(db.Model):
     def __repr__(self):
         return "Role('{}', '{}', '{}')" \
             .format(self.id, self.name, self.role_description)
+
+class SignUpForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Sign Up')
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')
+
+
+class RequestResetForm(FlaskForm):
+    """Reset Form"""
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    password_reset = StringField("Request Password Reset")
+    submit = SubmitField("Send")
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError('There is no account with that email. You')
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset Password')
+
