@@ -67,11 +67,12 @@ def table_to_dict(database_name):
 
 @users.route("/")
 def home():
+    Hospitals = table_to_dict(hospitals)
     full_name= None
     if current_user.is_authenticated:
         full_name = current_user.first_name + ' ' + current_user.last_name
     # Pass the laptop_parts list to the template
-    return render_template('index.html', full_name=full_name)
+    return render_template('index.html', full_name=full_name, Hospitals=Hospitals)
 
 
 

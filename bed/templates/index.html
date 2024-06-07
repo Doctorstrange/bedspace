@@ -1,12 +1,10 @@
 {% extends "base.html"%}
 
-
 {% block cards %}
-
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Wards</h1>
+    <h1>Hospitals</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -16,75 +14,62 @@
   </div><!-- End Page Title -->
 
   <section class="section dashboard">
-    <div class="row">
+    <div class="row"> <!-- Start of row -->
 
+      {% for i in range(Hospitals['id']|length) %}
 
-    </div>
-  </section>
+      <!-- listings Card -->
+      <div class="col-xxl-3 col-md-4 col-lg-4 col-sm-6">
+        <div class="card listing">
+          <div class="card-body position-relative">
+            <a href="Hospital" class="image-mask">
+              <img src="https://lh3.googleusercontent.com/drive-viewer/AEYmBYRrgvf9gpzKh5gPNaLSg0PvkWLnDSnKoIZ9CQ1G-BnjHGKX8UiYPGrMA8J_lvHGa2ke-3tOs_B5iH1SU-jsYKjBObWF4w=s1600" class="card-img-top image-overlay limit-image">
+            </a>
 
+            <div class="d-flex">
+              <div class="col-10 card-dis">
+                <div class="row">
+                  <div class="d-flex align-items-center dis-row">
+                    <i class="bi bi-coin"></i>
+                    <h3 class="mb-0">{{Hospitals['name'][i]}}</h3>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-laptop"></i>
+                    <h5 class="mb-0">{{Hospitals['classification'][i]}}</h5>
+                  </div>
+                </div>
 
-  <section class="section dashboard">
-    <div class="row">
-
-
-
-
-<!-- listings Card -->
-<div class="col-xxl-3 col-md-4 col-lg-4 col-sm-6">
-  <div class="card listing">
-    <div class="card-body position-relative">
-      <a href="Hospital" class="image-mask">
-        <img src="https://lh3.googleusercontent.com/drive-viewer/AEYmBYRrgvf9gpzKh5gPNaLSg0PvkWLnDSnKoIZ9CQ1G-BnjHGKX8UiYPGrMA8J_lvHGa2ke-3tOs_B5iH1SU-jsYKjBObWF4w=s1600" class="card-img-top image-overlay limit-image">
-      </a>
-
-      <div class="d-flex">
-        <div class="col-10 card-dis">
-          <div class="row">
-            <div class="d-flex align-items-center dis-row">
-              <i class="bi bi-coin"></i>
-              <h3 class="mb-0">LUTH</h3>
-            </div>
-            <div class="d-flex align-items-center">
-              <i class="bi bi-laptop"></i>
-              <h5 class="mb-0">Tertiary Health Center</h5>
+                <div class="spec-row">
+                  <div class="d-flex flex-wrap align-items-center">
+                    <div>
+                      <i class="bi bi-device-ssd"></i>
+                      <h7 class="pe-2">Total wards {{Hospitals['no_of_wards'][i]}}</h7>
+                    </div>
+                    <div>
+                      <i class="bi bi-memory"></i>
+                      <h7 class="pe-2">{{Hospitals['phone_no'][i]}}</h7>
+                    </div>
+                    <div>
+                      <i class="bi bi-cpu"></i>
+                      <h7 class="pe-2">{{Hospitals['address'][i]}}</h7>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 d-flex flex-column align-items-center justify-content-center">
+                <a href="#">
+                  <i class="bi bi-star"></i>
+                </a>
+              </div>
             </div>
           </div>
-
-          <div class="spec-row">
-            <div class="d-flex flex-wrap align-items-center">
-              <div>
-                <i class="bi bi-device-ssd"></i>
-                <h7 class="pe-2">Total Wards 50</h7>
-              </div>
-              <div>
-                <i class="bi bi-memory"></i>
-                <h7 class="pe-2">Total Beds 250</h7>
-              </div>
-              <div>
-                <i class="bi bi-cpu"></i>
-                <h7 class="pe-2">Free Beds 4</h7>
-              </div>
-            </div>
-
-          </div>
         </div>
-        <div class="col-2 d-flex flex-column align-items-center justify-content-center">
-          <a href="#">
-            <i class="bi bi-star"></i>
-          </a>
-        </div>
-
       </div>
-    </div>
-  </div>
-</div>
-<!-- listings Card -->
+      <!-- listings Card -->
 
+      {% endfor %}
 
-</div>
-</section>
-<!-- BEDS -->
-
-
-
-{%endblock%}
+    </div> <!-- End of row -->
+  </section>
+</main>
+{% endblock %}
