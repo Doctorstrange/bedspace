@@ -42,15 +42,47 @@ class ward(db.Model):
     free_beds = db.Column(db.Integer)
     user_id = db.Column(db.String(255))
 
+
+
+def table_to_dict(database_name):
+    # Retrieve all rows from the 'Laptop_listings' table
+    rows = database_name.query.all()
+
+    # Get the columns of the 'Laptop_listings' table
+    columns = database_name.__table__.columns.keys()
+
+    # Initialize an empty dictionary to store the table data
+    table_data = {column: [] for column in columns}
+
+    # Populate the dictionary with data from each row
+    for row in rows:
+        for column in columns:
+            # Get the value of the current column for the current row
+            value = getattr(row, column)
+            # Append the value to the corresponding list in the dictionary
+            table_data[column].append(value)
+
+    return table_data
+
+
 @users.route("/")
 def home():
-    return render_template('index.html')
+    full_name= None
+    if current_user.is_authenticated:
+        full_name = current_user.first_name + ' ' + current_user.last_name
+    # Pass the laptop_parts list to the template
+    return render_template('index.html', full_name=full_name)
 
 
 
 @users.route("/Hospital")
 def Hospital():
     return render_template('Hospital.html')
+
+
+@users.route("/Ward")
+def Ward():
+    return render_template('Ward.html')
 
 
 @users.route('/signup', methods=['GET', 'POST'])
@@ -104,3 +136,11 @@ def login():
         else:
             flash('Login unsuccessful. Please check your email and password.', 'danger')
     return render_template('login.html', form=form)
+
+
+@users.route("/logout")
+def logout():
+    """Logout a logged-in user"""
+    logout_user()
+    session.clear()  # Clear session data
+    return redirect(url_for('users.login'))
