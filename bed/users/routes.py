@@ -29,7 +29,7 @@ class ward_name(db.Model):
     hospital_id = db.Column(db.String(255))
     ward_no = db.Column(db.Integer)
     ward_name = db.Column(db.String(255))
-    ward_description = db.Column(db.String(255))
+    ward_desc = db.Column(db.String(255))
     location = db.Column(db.String(255))
 
 class ward(db.Model):
@@ -67,7 +67,7 @@ def table_to_dict(database_name):
 
 @users.route("/")
 def home():
-    Hospital = table_to_dict(hospitals)
+    Hospitals = table_to_dict(hospitals)
     full_name= None
     if current_user.is_authenticated:
         full_name = current_user.first_name + ' ' + current_user.last_name
