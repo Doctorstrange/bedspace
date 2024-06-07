@@ -1,0 +1,45 @@
+{% extends 'base.html' %} 
+
+{% block cards %}
+
+<h1>Submit Bed Form</h1>
+<form method="POST" action="/submit_bed">
+    <div class="container mt-2 col-lg-6 col-12">
+    <div>
+        {{ form.Ward_name.label }} {{ form.Ward_name(size=20) }}
+    </div>
+    <div>
+        {{ form.Ward_no.label }} {{ form.Ward_no(size=20) }}
+    </div>
+    <div>
+        {{ form.total_beds.label }} {{ form.total_beds(size=20) }}
+    </div>
+    <div>
+        {{ form.free_beds.label }} {{ form.free_beds(size=20) }}
+    </div>
+    <button type="submit">Submit</button>
+    </div>
+</form>
+
+
+
+{%endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

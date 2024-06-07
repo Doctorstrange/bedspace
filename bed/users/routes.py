@@ -145,3 +145,47 @@ def logout():
     logout_user()
     session.clear()  # Clear session data
     return redirect(url_for('users.login'))
+
+
+@users.route("/posting")
+def posting():
+    form = PostingForm()
+    full_name= None
+    if current_user.is_authenticated:
+        full_name = current_user.first_name + ' ' + current_user.last_name
+    return render_template('post.html', full_name=full_name, form=form)
+
+
+@users.route("/submit_bed", methods=['POST'])
+def submit_bed():
+    if current_user.is_authenticated:
+        ward_name = request.form.get('ward_name')
+        ward_no = request.form.get('ward_no')
+        total_beds = request.form.get('total_beds')
+        free_beds = request.form.get('free_beds')
+
+
+        users = table_to_dict(User)
+        for i in range(len(users['id'])):
+            if users['id'][i] == current_user.id:
+                if users['hospital_id'][i]:
+                    hospital = users['hospital_id'][i]
+                    bed_space = ward(
+                        id=current_user.id,
+                        hospital_id=hospital,
+                        ward_name=ward_name,
+                        ward_no=ward_no,
+                        total_beds=total_beds,
+                        free_beds=free_beds,
+                        user_id=current_user.id
+                    )
+                    db.session.add(bed_space)
+                    db.session.commit()
+                else:
+                    flash('Permission denied', 'success')
+            else:
+                flash('You need to be logged in to submit bed data', 'error')
+
+    # Redirect to a success page or another appropriate page
+    flash('Form submitted successfully', 'success')
+    return redirect(url_for('users.post'))

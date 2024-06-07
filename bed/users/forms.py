@@ -27,6 +27,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(128), nullable=False)  # Changed column name
     role = db.Column(db.Boolean, default=True)
     is_active = db.Column(db.Boolean, default=True)
+    hospital_id = db.Column(db.Integer)
 
     __table_args__ = (
         UniqueConstraint('email', name='unique_email'),
@@ -46,6 +47,7 @@ class User(UserMixin, db.Model):
 
 class PostingForm(FlaskForm):
     Ward_name = StringField('Name of word', validators=[DataRequired()])
+    Ward_no = StringField('Number of word', validators=[DataRequired()])
     total_beds = StringField('Total beds')
     free_beds= StringField('Free beds', validators=[DataRequired()])
 
