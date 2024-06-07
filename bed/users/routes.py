@@ -51,3 +51,56 @@ def home():
 @users.route("/Hospital")
 def Hospital():
     return render_template('Hospital.html')
+
+
+@users.route('/signup', methods=['GET', 'POST'])
+def sign_up():
+    form = SignUpForm()
+    if form.validate_on_submit():
+        # Check if the email already exists
+        existing_user = User.query.filter_by(email=form.email.data).first()
+        if existing_user:
+            flash('Email already exists', 'danger')
+        else:
+            # Proceed with creating a new user if the email doesn't exist
+            user_id = str(uuid.uuid4())
+            # Hash the password before storing it
+            hashed_password = generate_password_hash(form.password.data)
+            new_user = User(id=user_id,
+                            email=form.email.data,
+                            first_name=form.first_name.data,
+                            last_name=form.last_name.data,
+                            password=hashed_password)  # Store the hashed password
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+                flash('Account created successfully!', 'success')
+                return redirect(url_for('users.login'))
+            except IntegrityError:
+                db.session.rollback()
+                flash('An error occurred while creating your account. Please try again.', 'danger')
+    return render_template('signup.html', form=form)
+
+
+
+@users.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and user.check_password(form.password.data):
+            # Populate the user object with additional attributes
+            user_data = {
+                'id': user.id,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name
+            }
+            # Add user data to the session
+            session['user'] = user_data
+            login_user(user)
+            next_page = request.args.get('next')
+            return redirect(next_page or url_for('users.home'))
+        else:
+            flash('Login unsuccessful. Please check your email and password.', 'danger')
+    return render_template('login.html', form=form)

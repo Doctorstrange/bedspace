@@ -7,11 +7,11 @@ db_config = {
     'host': 'localhost',
     'user': 'strangedb',
     'password': 'as',
-    'database': 'ceevee'
+    'database': 'beddy'
 }
 
 # CSV file path
-csv_file = '../datadeploy/users.csv'
+csv_file = '../data_deploy/users.csv'
 
 # Table name in the database
 table_name = 'user'
