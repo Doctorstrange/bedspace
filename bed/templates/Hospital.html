@@ -29,7 +29,13 @@
     <div class="row">
 
 
-
+      {% for i in range(hospital['id']|length) %}
+      {% set hospital_id = wards['hospital_id'][i]|int %}
+      {% if hospital_id == 1234 %}
+        {% set total_beds = wards['total_beds'][i]|int %}
+        {% set free_beds = wards['free_beds'][i]|int %}
+        {% set used_space = total_beds - free_beds %}
+        {% for x in range(used_space) %}
 
 <!-- listings Card -->
 <div class="col-xxl-3 col-md-4 col-lg-4 col-sm-6">
@@ -44,11 +50,11 @@
           <div class="row">
             <div class="d-flex align-items-center dis-row">
               <i class="bi bi-coin"></i>
-              <h3 class="mb-0">Neuro Ward</h3>
+              <h3 class="mb-0">hospital['name'][i]</h3>
             </div>
             <div class="d-flex align-items-center">
               <i class="bi bi-laptop"></i>
-              <h5 class="mb-0">Free Beds 4</h5>
+              <h5 class="mb-0">hospital['classification'][i]</h5>
             </div>
           </div>
 

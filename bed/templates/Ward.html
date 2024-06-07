@@ -29,20 +29,18 @@
 
 <!-- BEDS -->
 
-<div>
   
   <h2>
-    Free Beds = 1
+    {% set free_bed = wards['free_beds'][0]|int %}
+    Free Beds = {{ free_bed }}
   </h2>
-</div>
-    <!-- listings Card -->
-    <div class="col-xxl-3 col-md-4 col-lg-4 col-sm-6">
-
-        <div class="card-body position-relative">
-              <i class="bi bi-file-person-fill"></i>
-      </div>
-    </div>
-    <!-- listings Card -->
+{% for i in range(wards['id']|length) %}
+  {% set hospital_id = wards['hospital_id'][i]|int %}
+  {% if hospital_id == 1234 %}
+    {% set total_beds = wards['total_beds'][i]|int %}
+    {% set free_beds = wards['free_beds'][i]|int %}
+    {% set used_space = total_beds - free_beds %}
+    {% for x in range(used_space) %}
 
 
     <!-- listings Card -->
@@ -55,26 +53,17 @@
     <!-- listings Card -->
 
 
-        <!-- listings Card -->
-    <div class="col-xxl-3 col-md-4 col-lg-4 col-sm-6">
-
-        <div class="card-body position-relative">
-              <i class="bi bi-file-person-fill"></i>
-      </div>
-    </div>
-    <!-- listings Card -->
+    {% endfor %}
+  {% endif %}
+{% endfor %}
 
 
 
-        <!-- listings Card -->
-    <div class="col-xxl-3 col-md-4 col-lg-4 col-sm-6">
-
-        <div class="card-body position-relative">
-              <i class="bi bi-file-person-fill"></i>
-      </div>
-    </div>
-    <!-- listings Card -->
-
+{% for i in range(wards['id']|length) %}
+  {% set hospital_id = wards['hospital_id'][i]|int %}
+  {% if hospital_id == 1234 %}
+    {% set free_beds = wards['free_beds'][i]|int %}
+    {% for x in range(free_beds) %}
 
 
     <!-- listings Card -->
@@ -86,7 +75,11 @@
     </div>
     <!-- listings Card -->
 
-     
+
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
       </div>
     </section>
   <!-- BEDS -->

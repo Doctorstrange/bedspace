@@ -72,23 +72,24 @@
 
 
 
-        {% if current_user.is_authenticated %}
+
 
 
         <nav class="header-nav ms-auto">
 
             <ul class="d-flex align-items-center">
-      
+        {% if current_user.hospital_id == '1234' %}
               <li class="nav-item dropdown">
       
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                  <i class="bi bi-heart"></i>
-                  <span class="badge bg-success badge-number">3</span>
+                <a class="nav-link nav-icon" href="posting">
+                  <i class="bi bi-plus-square-fill"></i>
                 </a><!-- End Messages Icon -->
       
               </li><!-- End Messages Nav -->
+        {% endif %}
+        
 
-
+        {% if current_user.is_authenticated %}
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">

@@ -67,7 +67,7 @@ def table_to_dict(database_name):
 
 @users.route("/")
 def home():
-    Hospitals = table_to_dict(hospitals)
+    Hospital = table_to_dict(hospitals)
     full_name= None
     if current_user.is_authenticated:
         full_name = current_user.first_name + ' ' + current_user.last_name
@@ -78,12 +78,20 @@ def home():
 
 @users.route("/Hospital")
 def Hospital():
-    return render_template('Hospital.html')
+    Ward_name = table_to_dict(ward_name)
+    full_name= None
+    if current_user.is_authenticated:
+        full_name = current_user.first_name + ' ' + current_user.last_name
+    return render_template('Hospital.html', full_name=full_name, Ward_name=Ward_name)
 
 
 @users.route("/Ward")
 def Ward():
-    return render_template('Ward.html')
+    wards = table_to_dict(ward)
+    full_name= None
+    if current_user.is_authenticated:
+        full_name = current_user.first_name + ' ' + current_user.last_name
+    return render_template('Ward.html', full_name=full_name, wards=wards)
 
 
 @users.route('/signup', methods=['GET', 'POST'])
@@ -159,33 +167,43 @@ def posting():
 @users.route("/submit_bed", methods=['POST'])
 def submit_bed():
     if current_user.is_authenticated:
-        ward_name = request.form.get('ward_name')
-        ward_no = request.form.get('ward_no')
+        ward_name = request.form.get('Ward_name')
+        ward_no = request.form.get('Ward_no')
         total_beds = request.form.get('total_beds')
         free_beds = request.form.get('free_beds')
-
 
         users = table_to_dict(User)
         for i in range(len(users['id'])):
             if users['id'][i] == current_user.id:
                 if users['hospital_id'][i]:
-                    hospital = users['hospital_id'][i]
-                    bed_space = ward(
-                        id=current_user.id,
-                        hospital_id=hospital,
-                        ward_name=ward_name,
-                        ward_no=ward_no,
-                        total_beds=total_beds,
-                        free_beds=free_beds,
-                        user_id=current_user.id
-                    )
-                    db.session.add(bed_space)
+                    hospital_id = users['hospital_id'][i]
+
+                    # Check if the ward with the same hospital_id and ward_no exists
+                    existing_ward = ward.query.filter_by(hospital_id=hospital_id, ward_no=ward_no).first()
+
+                    if existing_ward:
+                        # Update the existing ward
+                        existing_ward.ward_name = ward_name
+                        existing_ward.total_beds = total_beds
+                        existing_ward.free_beds = free_beds
+                    else:
+                        # Create a new ward
+                        new_ward = ward(
+                            id=current_user.id,
+                            hospital_id=hospital_id,
+                            ward_name=ward_name,
+                            ward_no=ward_no,
+                            total_beds=total_beds,
+                            free_beds=free_beds,
+                            user_id=current_user.id
+                        )
+                        db.session.add(new_ward)
+
                     db.session.commit()
+                    flash('Ward data submitted successfully', 'success')
                 else:
-                    flash('Permission denied', 'success')
+                    flash('Permission denied', 'error')
             else:
                 flash('You need to be logged in to submit bed data', 'error')
 
-    # Redirect to a success page or another appropriate page
-    flash('Form submitted successfully', 'success')
-    return redirect(url_for('users.post'))
+    return redirect(url_for('users.posting'))

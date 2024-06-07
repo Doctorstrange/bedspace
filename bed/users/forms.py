@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, NumberRange
 from bed import db, login_manager
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -48,8 +48,8 @@ class User(UserMixin, db.Model):
 class PostingForm(FlaskForm):
     Ward_name = StringField('Name of word', validators=[DataRequired()])
     Ward_no = StringField('Number of word', validators=[DataRequired()])
-    total_beds = StringField('Total beds')
-    free_beds= StringField('Free beds', validators=[DataRequired()])
+    total_beds = IntegerField('Total beds', validators=[DataRequired(), NumberRange(min=0)])
+    free_beds = IntegerField('Free beds', validators=[DataRequired(), NumberRange(min=0)])
 
 
 

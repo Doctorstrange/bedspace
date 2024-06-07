@@ -2,24 +2,24 @@
 
 {% block cards %}
 
-<h1>Submit Bed Form</h1>
-<form method="POST" action="/submit_bed">
-    <div class="container mt-2 col-lg-6 col-12">
-    <div>
-        {{ form.Ward_name.label }} {{ form.Ward_name(size=20) }}
-    </div>
-    <div>
-        {{ form.Ward_no.label }} {{ form.Ward_no(size=20) }}
-    </div>
-    <div>
-        {{ form.total_beds.label }} {{ form.total_beds(size=20) }}
-    </div>
-    <div>
-        {{ form.free_beds.label }} {{ form.free_beds(size=20) }}
-    </div>
-    <button type="submit">Submit</button>
-    </div>
-</form>
+<div class="container mt-2 col-lg-6 col-12 center-div">
+    <h1>Submit Bed Form</h1>
+    <form method="POST" action="/submit_bed">
+        <div class="form-group">
+            {{ form.Ward_name.label }} {{ form.Ward_name(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.Ward_no.label }} {{ form.Ward_no(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.total_beds.label }} {{ form.total_beds(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.free_beds.label }} {{ form.free_beds(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 
 
 
