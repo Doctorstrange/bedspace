@@ -76,13 +76,13 @@ def home():
 
 
 
-@users.route("/Hospital")
-def Hospital():
+@users.route("/Hospital/<int:clinic_id>")
+def Hospital(clinic_id):
     Ward_name = table_to_dict(ward_name)
     full_name= None
     if current_user.is_authenticated:
         full_name = current_user.first_name + ' ' + current_user.last_name
-    return render_template('Hospital.html', full_name=full_name, Ward_name=Ward_name)
+    return render_template('Hospital.html', full_name=full_name, Ward_name=Ward_name, clinic_id=clinic_id)
 
 
 @users.route("/Ward")
