@@ -103,7 +103,7 @@ def sign_up():
         if existing_user:
             flash('Email already exists', 'danger')
         else:
-            # Proceed with creating a new user if the email doesn't exist
+            # created bt coker Proceed with creating a new user if the email doesn't exist
             user_id = str(uuid.uuid4())
             # Hash the password before storing it
             hashed_password = generate_password_hash(form.password.data)
