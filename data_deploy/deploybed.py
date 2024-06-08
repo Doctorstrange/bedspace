@@ -11,10 +11,10 @@ db_config = {
 }
 
 # CSV file path
-csv_file = '../data_deploy/users.csv'
+csv_file = '../data_deploy/ward_name_more.csv'
 
 # Table name in the database
-table_name = 'user'
+table_name = 'Ward_name'
 
 # Connect to the database
 try:

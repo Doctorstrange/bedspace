@@ -1,0 +1,13 @@
+id,hospital_id,ward_no,ward_name,ward_desc,location,total_beds
+4,1234,4,emergency,accident and emmergency,luth,
+5,1234,5,pediatrics,pediatrics,luth,
+6,1234,6,surgery,surgical unit,luth,
+7,1235,7,emergency,accident and emmergency,luth,
+8,1235,8,pediatrics,pediatrics,luth,
+9,1235,9,surgery,surgical unit,luth,
+10,1235,10,neuro,neurology cases,luth,
+11,1235,11,endo,endo cases,luth,
+12,1235,12,Rheumatology,autoimmune cases,luth,
+13,1236,13,emergency,accident and emmergency,ikeja,
+14,1236,14,pediatrics,pediatrics,ikeja,
+15,1236,15,surgery,surgical unit,ikeja,
