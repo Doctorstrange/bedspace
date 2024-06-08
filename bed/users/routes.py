@@ -76,7 +76,7 @@ def home():
 
 
 
-@users.route("/Hospital/<int:clinic_id>")
+@users.route("/Hospital/<clinic_id>")
 def Hospital(clinic_id):
     Ward_name = table_to_dict(ward_name)
     full_name= None
