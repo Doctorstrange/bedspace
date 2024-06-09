@@ -7,7 +7,7 @@
     <h1>Hospitals</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
         <li class="breadcrumb-item active">Hospitals</li>
       </ol>
     </nav>
@@ -15,7 +15,7 @@
 
   <section class="section dashboard">
     <div class="row"> <!-- Start of row -->
-
+{{ Hospitals }}
       {% for i in range(Hospitals['id']|length) %}
         
       <!-- listings Card -->

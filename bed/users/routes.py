@@ -34,7 +34,7 @@ class ward_name(db.Model):
 
 class ward(db.Model):
     __tablename__ = 'Ward'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     hospital_id = db.Column(db.String(255))
     ward_no = db.Column(db.Integer)
     ward_name = db.Column(db.String(255))
@@ -65,6 +65,22 @@ def table_to_dict(database_name):
     return table_data
 
 
+
+def table_to_dictionary(table):
+    """
+    Convert a table to a dictionary.
+    Each key in the dictionary will correspond to a column name and 
+    the associated value will be a list of all entries in that column.
+    """
+    result = {col: [] for col in table[0].keys()}  # Initialize a dictionary with empty lists for each column
+
+    for row in table:
+        for col, val in row.items():
+            result[col].append(val)  # Append each cell value to the corresponding column list
+    
+    return result
+
+
 @users.route("/")
 def home():
     Hospitals = table_to_dict(hospitals)
@@ -86,14 +102,14 @@ def Hospital(clinic_id):
     return render_template('Hospital.html', full_name=full_name, Ward_name=Ward_name, clinic_id=clinic_id, Hospitals=Hospitals)
 
 
-@users.route("/Ward/<clinic_id>")
-def Ward(clinic_id):
+@users.route("/Ward/<ward_id>")
+def Ward(ward_id):
     wards = table_to_dict(ward)
     Hospitals = table_to_dict(hospitals)
     full_name= None
     if current_user.is_authenticated:
         full_name = current_user.first_name + ' ' + current_user.last_name
-    return render_template('Ward.html', full_name=full_name, wards=wards, clinic_id=clinic_id, Hospitals=Hospitals)
+    return render_template('Ward.html', full_name=full_name, wards=wards, ward_id=ward_id, Hospitals=Hospitals)
 
 
 @users.route('/signup', methods=['GET', 'POST'])
@@ -180,6 +196,12 @@ def submit_bed():
                 if users['hospital_id'][i]:
                     hospital_id = users['hospital_id'][i]
 
+                    # Get the maximum id value
+                    max_id = db.session.query(func.max(ward.id)).scalar()
+
+                    # Set the new id to be one more than the maximum id value
+                    new_id = int(max_id) + 1 if max_id else 1
+
                     # Check if the ward with the same hospital_id and ward_no exists
                     existing_ward = ward.query.filter_by(hospital_id=hospital_id, ward_no=ward_no).first()
 
@@ -191,7 +213,7 @@ def submit_bed():
                     else:
                         # Create a new ward
                         new_ward = ward(
-                            id=current_user.id,
+                            id = new_id,
                             hospital_id=hospital_id,
                             ward_name=ward_name,
                             ward_no=ward_no,

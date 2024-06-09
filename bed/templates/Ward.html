@@ -9,7 +9,7 @@
       <h1>Wards</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
           <li class="breadcrumb-item active">Neuro Ward</li>
         </ol>
       </nav>
@@ -29,14 +29,20 @@
 
 <!-- BEDS -->
 
+<h2>
+  {% for i in range(wards['id']|length) %}
+    {% set ward_identification = wards['ward_no'][i] %}
+    {% if ward_identification == ward_id %}
+      Free Bed(s) = {{wards['free_beds'][i]}}
+    {% endif %}
+  {% endfor %}
   
-  <h2>
-    {% set free_bed = wards['free_beds'][0]|int %}
-    Free Beds = {{ free_bed }}
   </h2>
+
+
 {% for i in range(wards['id']|length) %}
-  {% set hospital_id = wards['hospital_id'][i]|int %}
-  {% if hospital_id == 1234 %}
+  {% set ward_identification = wards['ward_no'][i] %}
+  {% if ward_identification == ward_id %}
     {% set total_beds = wards['total_beds'][i]|int %}
     {% set free_beds = wards['free_beds'][i]|int %}
     {% set used_space = total_beds - free_beds %}
@@ -60,8 +66,8 @@
 
 
 {% for i in range(wards['id']|length) %}
-  {% set hospital_id = wards['hospital_id'][i]|int %}
-  {% if hospital_id == 1234 %}
+{% set ward_identification = wards['ward_no'][i] %}
+{% if ward_identification == ward_id %}
     {% set free_beds = wards['free_beds'][i]|int %}
     {% for x in range(free_beds) %}
 
