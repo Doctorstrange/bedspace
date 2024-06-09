@@ -75,7 +75,7 @@
         <nav class="header-nav ms-auto">
 
             <ul class="d-flex align-items-center">
-        {% if current_user.hospital_id == '1234' %}
+        {% if current_user.hospital_id%}
               <li class="nav-item dropdown">
       
                 <a class="nav-link nav-icon" href="{{ url_for('users.posting') }}">
