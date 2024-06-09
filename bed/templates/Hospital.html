@@ -28,7 +28,6 @@
   <section class="section dashboard">
     <div class="row">
 
-
       {% for i in range(Ward_name['id']|length) %}
         {%if Ward_name['hospital_id'][i] == clinic_id %}
 
@@ -36,7 +35,7 @@
           <div class="col-xxl-3 col-md-4 col-lg-4 col-sm-6">
             <div class="card listing">
               <div class="card-body position-relative">
-                <a href="{{ url_for('users.Ward', ward_id=Ward_name['ward_no'][i]) }}" class="image-mask">
+                <a href="{{ url_for('users.Ward', ward_id=Ward_name['ward_no'][i], clinic_id=clinic_id) }}" class="image-mask">
                   <img src="https://lh3.googleusercontent.com/drive-viewer/AEYmBYRrgvf9gpzKh5gPNaLSg0PvkWLnDSnKoIZ9CQ1G-BnjHGKX8UiYPGrMA8J_lvHGa2ke-3tOs_B5iH1SU-jsYKjBObWF4w=s1600" class="card-img-top image-overlay limit-image">
                 </a>
 

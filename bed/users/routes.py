@@ -102,14 +102,14 @@ def Hospital(clinic_id):
     return render_template('Hospital.html', full_name=full_name, Ward_name=Ward_name, clinic_id=clinic_id, Hospitals=Hospitals)
 
 
-@users.route("/Ward/<ward_id>")
-def Ward(ward_id):
+@users.route("/Ward/<ward_id>/<clinic_id>")
+def Ward(ward_id, clinic_id):
     wards = table_to_dict(ward)
     Hospitals = table_to_dict(hospitals)
     full_name= None
     if current_user.is_authenticated:
         full_name = current_user.first_name + ' ' + current_user.last_name
-    return render_template('Ward.html', full_name=full_name, wards=wards, ward_id=ward_id, Hospitals=Hospitals)
+    return render_template('Ward.html', full_name=full_name, wards=wards, ward_id=ward_id, Hospitals=Hospitals, clinic_id=clinic_id)
 
 
 @users.route('/signup', methods=['GET', 'POST'])
